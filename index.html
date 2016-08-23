@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reblaze Address Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Noticia+Text' rel='stylesheet' type='text/css'>
+    <!--Angular libraries-->
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/lib/angular/angular-route.min.js"></script>
+    <script src="js/lib/angular/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+    <!--jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <!--my JS files-->
+    <script src="js/app.js"></script>
+</head>
+
+<body style="background-color: whitesmoke">
+<div layout="column" class="main" ng-controller="MainController" >
+    <!--header: logo and headline-->
+    <div layout="row" style="background-color: dodgerblue" ng-cloak>
+        <div class="header" layout="row"  layout-align="space-between start">
+            <div>
+                <img ng-src="./images/reblaze-logo.png" style="margin: 8px 0 0 10px;"/>
+            </div>
+            <div>
+                <h2 class="headline" style="text-align: center;font-family: Noticia Text;margin: 17.5px 0 0 10px;">- Address Book</h2>
+            </div>
+        </div>
+    </div>
+    <!--search bar and adding button-->
+    <div layout="row" layout-wrap style="background-color: whitesmoke" ng-cloak>
+        <div layout="column" flex="10"></div>
+        <div layout="column" flex="80" >
+            <md-toolbar ng-cloak class="upperBar" layout="row" layout-align="center center" layout-wrap style="background-color: whitesmoke">
+                <!--add button-->
+                <md-icon md-svg-icon="./images/icons/add_circle.svg" ng-click="showAdd($event)" aria-label="Add Contact" flex="5" style="margin: 0"></md-icon>
+                <!--search bar-->
+                <md-input-container md-theme="input" layout-align="center center" flex="60" style="height: 35px;">
+                    <label>&nbsp;</label>
+                    <input ng-model="search.firstName" placeholder="Search for first name">
+                </md-input-container>
+                <!--search icon-->
+                <md-icon md-svg-icon="./images/icons/search.svg" flex="5" style="margin: 0">></md-icon>
+            </md-toolbar>
+            <!--contact-list-->
+            <md-content flex md-scroll-y style="background-color: whitesmoke">
+                <ui-view layout="column" flex-offset="15" flex="70">
+                    <md-card flex-gt-sm="90" flex-gt-md="80">
+                        <md-card-content>
+                            <md-list>
+                                <md-list-item ng-repeat="person in people | filter:search" ng-model="person" ng-click="goToPerson(person, $event)" class="md-3-line">
+                                    <!--avatar-->
+                                    <img alt="{{ person.firstName }}" ng-src="./images/icons/face.svg" class="md-avatar" />
+                                    <!--full name-->
+                                    <p>{{ person.firstName }} {{ person.lastName }}</p>
+                                    <!--edit button-->
+                                    <md-icon md-svg-icon="./images/icons/edit.svg"  ng-click="showEdit($index ,$person, $event)" aria-label="Edit Contact" class="md-secondary md-hue-3" ></md-icon>
+                                    <!--delee button-->
+                                    <md-icon md-svg-icon="./images/icons/delete.svg"  ng-click="deleteContact($index, $event)" aria-label="Delete Contact" class="md-secondary md-hue-3" ></md-icon>
+                                </md-list-item>
+                            </md-list>
+                        </md-card-content>
+                    </md-card>
+                </ui-view>
+            </md-content>
+        </div>
+        <div layout="column" flex="10"></div>
+    </div>
+    <br><br><br>
+    <!--credit-->
+    <p style="font-size: 12px; background-color: whitesmoke">&nbsp; Made by Yair Weisman</p>
+
+</div>
+</body>
+</html>
